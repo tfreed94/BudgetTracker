@@ -10,7 +10,7 @@ req.onupgradeneeded = (event) => {
 req.onsuccess = (event) => {
     database = event.target.res;
     if (navigator.onLine) {
-        checkDB();
+        searchDataBase();
     }
 };
 
@@ -22,7 +22,7 @@ saveRecord = (rec) => {
 }
 
 
-checkDB = () => {
+searchDataBase = () => {
     const transaction = database.transaction("creating", "readonly");
     const storage = transaction.objectStore("creating");
     const getAll = storage.getAll();
@@ -47,4 +47,4 @@ checkDB = () => {
         }
     };
 }
-window.addEventListener("online", checkDB);
+window.addEventListener("online", searchDataBase);
