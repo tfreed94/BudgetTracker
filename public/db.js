@@ -14,19 +14,10 @@ req.onsuccess = (event) => {
     }
 };
 
-
-saveRecord = (rec) => {
-    const transaction = database.transaction("creating", "readwrite");
-    const storage = transaction.objectStore("creating");
-    storage.add(rec);
-}
-
-
 searchDataBase = () => {
     const transaction = database.transaction("creating", "readonly");
     const storage = transaction.objectStore("creating");
     const getAll = storage.getAll();
-
     getAll.onsuccess = () => {
         if (getAll.res.length > 0) {
             fetch("/api/transaction/bulk", {
@@ -38,8 +29,7 @@ searchDataBase = () => {
                     "Content-Type": "application/json"
                 }
             })
-                .then((res) => res.json())
-                .then(() => {
+                .then((res) => res.json()).then(() => {
                     const transaction = database.transaction("creating", "readwrite");
                     const storage = transaction.objectStore("creating");
                     storage.clear();
@@ -47,4 +37,13 @@ searchDataBase = () => {
         }
     };
 }
+
+saveRecord = (rec) => {
+    const transaction = database.transaction("creating", "readwrite");
+    const storage = transaction.objectStore("creating");
+    storage.add(rec);
+}
+
+
+
 window.addEventListener("online", searchDataBase);
