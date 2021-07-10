@@ -29,8 +29,7 @@ self.addEventListener(`activate`, evt => {
 });
 
 self.addEventListener(`fetch`, evt => {
-    if (evt.req.method !== `GET` || !evt.req.url.startsWith(self.location.origin)
-    ) {
+    if (evt.req.method !== `GET` || !evt.req.url.startsWith(self.location.origin)) {
         evt.respondWith(fetch(evt.req));
         return;
     }
