@@ -3,12 +3,12 @@ let database;
 const req = indexedDB.open("budget", 1);
 
 req.onupgradeneeded = (event) => {
-    const database = event.target.res
+    const database = event.target.result
     database.createObjectStore("creating", { autoIncrement: true });
 };
 
 req.onsuccess = (event) => {
-    database = event.target.res;
+    database = event.target.result;
     if (navigator.onLine) {
         searchDataBase();
     }
@@ -19,10 +19,10 @@ searchDataBase = () => {
     const storage = transaction.objectStore("creating");
     const getAll = storage.getAll();
     getAll.onsuccess = () => {
-        if (getAll.res.length > 0) {
+        if (getAll.result.length > 0) {
             fetch("/api/transaction/bulk", {
                 method: "POST",
-                body: JSON.stringify(getAll.res),
+                body: JSON.stringify(getAll.result),
                 headers:
                 {
                     Accept: "application/json, text/plain, */*",
