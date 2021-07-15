@@ -15,7 +15,7 @@ req.onsuccess = (event) => {
 };
 
 searchDataBase = () => {
-    const transaction = database.transaction("creating", "readonly");
+    const transaction = database.transaction(["creating"], "readonly");
     const storage = transaction.objectStore("creating");
     const getAll = storage.getAll();
     getAll.onsuccess = () => {
@@ -30,7 +30,7 @@ searchDataBase = () => {
                 }
             })
                 .then((res) => res.json()).then(() => {
-                    const transaction = database.transaction("creating", "readwrite");
+                    const transaction = database.transaction(["creating"], "readwrite");
                     const storage = transaction.objectStore("creating");
                     storage.clear();
                 });
@@ -39,7 +39,7 @@ searchDataBase = () => {
 }
 
 saveRecord = (rec) => {
-    const transaction = database.transaction("creating", "readwrite");
+    const transaction = database.transaction(["creating"], "readwrite");
     const storage = transaction.objectStore("creating");
     storage.add(rec);
 }
